@@ -1,0 +1,92 @@
+<!-- Odoo strips <style> from descriptions; every rule is inline. Description
+     images must be ABSOLUTE urls. See Apps/miko-catalog-health-odoo/PUBLISHING.md. -->
+<section style="color:#0F172A;font-size:16px;line-height:1.62;">
+ <div style="max-width:1000px;margin:0 auto;">
+
+  <div style="padding:8px 0 40px;">
+   <h2 style="font-size:30px;line-height:1.22;font-weight:800;color:#0F172A;margin:0 0 14px;">You find out you cannot reorder it on the day you need it.</h2>
+   <p style="font-size:18px;color:#334155;margin:0 0 15px;">A product marked as purchasable with no supplier line Odoo can actually
+   use cannot be bought. The product record looks completely normal. Nothing warns
+   you. The problem surfaces when stock runs out and somebody tries to raise the
+   purchase order.</p>
+   <div style="border:1px solid #E2E8F0;border-radius:12px;overflow:hidden;margin:22px 0 8px;"><img class="img-fluid" style="max-width:100%;width:100%;height:auto;display:block;" src="https://cdn.jsdelivr.net/gh/pratzs/miko-supplier-health-odoo@supplier-assets-1.0.0/miko_supplier_health/static/description/screenshot_supply.png"
+     alt="Products that cannot be reordered, with the reason for each"/></div>
+   <p style="font-size:14px;color:#64748B;margin:10px 0 0;">Every product you buy, and whether Odoo can actually buy it.</p>
+  </div>
+
+  <div style="padding:40px 0;border-top:1px solid #E2E8F0;">
+   <h2 style="font-size:30px;line-height:1.22;font-weight:800;color:#0F172A;margin:0 0 14px;">Four ways a product quietly becomes unbuyable</h2>
+   <div class="table-responsive" style="overflow-x:auto;margin-top:20px;">
+    <table class="table" style="width:100%;border-collapse:collapse;font-size:15px;">
+     <thead><tr style="background:#F8FAFC;"><th style="text-align:left;padding:10px 12px;border-bottom:1px solid #E2E8F0;">What it finds</th><th style="text-align:left;padding:10px 12px;border-bottom:1px solid #E2E8F0;">Why it matters</th></tr></thead>
+     <tbody>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E2E8F0;"><strong>No supplier at all</strong></td><td style="padding:10px 12px;border-bottom:1px solid #E2E8F0;color:#475569;">Marked purchasable, never given a vendor. There is nothing to raise a purchase order against.</td></tr>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E2E8F0;"><strong>Every line expired</strong></td><td style="padding:10px 12px;border-bottom:1px solid #E2E8F0;color:#475569;">The supplier lines exist but their validity dates have all passed, so Odoo will not select any of them.</td></tr>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E2E8F0;"><strong>Supplier has no price</strong></td><td style="padding:10px 12px;border-bottom:1px solid #E2E8F0;color:#475569;">The line is live and will be used. It raises a purchase order at zero, which the supplier then queries.</td></tr>
+      <tr><td style="padding:10px 12px;border-bottom:1px solid #E2E8F0;"><strong>Line can never be used</strong></td><td style="padding:10px 12px;border-bottom:1px solid #E2E8F0;color:#475569;">Another line always wins. See below.</td></tr>
+     </tbody>
+    </table>
+   </div>
+   <p style="font-size:14px;color:#64748B;margin:10px 0 0;">A product nobody buys is never flagged. Neither is one with a single
+   usable line, however old the others are.</p>
+  </div>
+
+  <div style="padding:40px 0;border-top:1px solid #E2E8F0;">
+   <h2 style="font-size:30px;line-height:1.22;font-weight:800;color:#0F172A;margin:0 0 14px;">Supplier lines that can never be used</h2>
+   <p style="font-size:18px;color:#334155;margin:0 0 15px;">Nothing else on this store does this.</p>
+   <p style="color:#475569;margin:0 0 15px;">Odoo walks supplier lines in a fixed order and takes the FIRST one that
+   fits: sequence first, then the highest minimum quantity. A line sitting behind
+   another that already covers every case it would cover is dead. It has a price on
+   it, it looks live, and no purchase order has ever used it. You are buying at a
+   price you did not choose.</p>
+   <div style="border:1px solid #E2E8F0;border-radius:12px;overflow:hidden;margin:22px 0 8px;"><img class="img-fluid" style="max-width:100%;width:100%;height:auto;display:block;" src="https://cdn.jsdelivr.net/gh/pratzs/miko-supplier-health-odoo@supplier-assets-1.0.0/miko_supplier_health/static/description/screenshot_lines.png"
+     alt="A supplier line identified as never used, naming the line that beats it"/></div>
+   <p style="font-size:14px;color:#64748B;margin:10px 0 0;">It reproduces Odoo's own ordering and names the line that wins instead.</p>
+   <p style="color:#475569;margin:0 0 15px;">Only provable shadowing is claimed: same supplier, same product, same
+   company, reached at a quantity at least as low, valid across at least the same
+   dates. A line on the template and a line on one variant do overlap, but proving
+   that needs the variant set walked, and a wrong answer would condemn a line you
+   genuinely buy on.</p>
+  </div>
+
+  <div style="padding:40px 0;border-top:1px solid #E2E8F0;">
+   <h2 style="font-size:30px;line-height:1.22;font-weight:800;color:#0F172A;margin:0 0 14px;">It does not cry wolf</h2>
+   <p style="color:#475569;margin:0 0 15px;">A control that fires on legitimate setups gets ignored. These are never
+   counted against anything:</p>
+   <ul style="color:#475569;padding-left:20px;margin:0;">
+     <li style="margin-bottom:8px;">Products not marked as purchased. Anything made in house or drop shipped needs no supplier.</li>
+     <li style="margin-bottom:8px;">Products with one usable line, no matter how many expired ones sit beside it.</li>
+     <li style="margin-bottom:8px;">Lines that have not started yet. Reported as waiting, never as dead.</li>
+     <li style="margin-bottom:8px;">Quantity ladders. Every step of a real price break survives, or the audit would be lying.</li>
+   </ul>
+   <p style="font-size:14px;color:#64748B;margin:10px 0 0;">Sixteen automated tests ship inside the module, run against Odoo 14
+   through 19 before every release. Half exist to prove it stays quiet.</p>
+  </div>
+
+  <div style="padding:40px 0;border-top:1px solid #E2E8F0;">
+   <h2 style="font-size:30px;line-height:1.22;font-weight:800;color:#0F172A;margin:0 0 14px;">Technical notes</h2>
+   <div class="table-responsive" style="overflow-x:auto;margin-top:20px;">
+    <table class="table" style="width:100%;border-collapse:collapse;font-size:15px;">
+     <tbody>
+      <tr><th style="text-align:left;padding:10px 12px;border-bottom:1px solid #E2E8F0;" style="background:#F8FAFC;text-align:left;padding:10px 12px;border-bottom:1px solid #E2E8F0;">Odoo versions</th><td style="padding:10px 12px;border-bottom:1px solid #E2E8F0;color:#475569;"><strong>14.0 through 19.0</strong>, Community and Enterprise</td></tr>
+      <tr><th style="text-align:left;padding:10px 12px;border-bottom:1px solid #E2E8F0;" style="background:#F8FAFC;text-align:left;padding:10px 12px;border-bottom:1px solid #E2E8F0;">Hosting</th><td style="padding:10px 12px;border-bottom:1px solid #E2E8F0;color:#475569;">Odoo.sh and on premise. Odoo Online cannot run third party modules containing Python.</td></tr>
+      <tr><th style="text-align:left;padding:10px 12px;border-bottom:1px solid #E2E8F0;" style="background:#F8FAFC;text-align:left;padding:10px 12px;border-bottom:1px solid #E2E8F0;">Depends on</th><td style="padding:10px 12px;border-bottom:1px solid #E2E8F0;color:#475569;"><code>purchase</code></td></tr>
+      <tr><th style="text-align:left;padding:10px 12px;border-bottom:1px solid #E2E8F0;" style="background:#F8FAFC;text-align:left;padding:10px 12px;border-bottom:1px solid #E2E8F0;">External services</th><td style="padding:10px 12px;border-bottom:1px solid #E2E8F0;color:#475569;">None. Nothing leaves your database.</td></tr>
+      <tr><th style="text-align:left;padding:10px 12px;border-bottom:1px solid #E2E8F0;" style="background:#F8FAFC;text-align:left;padding:10px 12px;border-bottom:1px solid #E2E8F0;">Tests</th><td style="padding:10px 12px;border-bottom:1px solid #E2E8F0;color:#475569;">16 automated tests on all six series</td></tr>
+     </tbody>
+    </table>
+   </div>
+  </div>
+
+  <div style="padding:40px 0 8px;border-top:1px solid #E2E8F0;">
+   <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:14px;padding:24px 26px;">
+    <h3 style="font-size:19px;font-weight:700;margin:0 0 7px;">A Miko app, built by Tripster Developers</h3>
+    <p style="color:#475569;margin:0 0 15px;">We are a software engineering firm in New Zealand and we build and support
+    Odoo for businesses that run their operations on it.</p>
+    <p style="color:#475569;margin:0;">A buying-side check you need and this does not
+    cover? <a href="mailto:support@tripsterdevelopers.com" style="color:#524285;font-weight:600;">support@tripsterdevelopers.com</a></p>
+   </div>
+  </div>
+
+ </div>
+</section>
