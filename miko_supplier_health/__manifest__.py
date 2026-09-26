@@ -9,7 +9,7 @@ that have expired or can never be reached, and minimum order quantities that
 conflict with the rest of your setup.
 """,
     'author': 'Tripster Developers',
-    'website': 'https://tripsterdevelopers.com/odoo/',
+    'website': 'https://miko.co.nz/odoo/vendor-price-check',
     'category': 'Purchases',
     'license': 'OPL-1',
     'depends': ['purchase'],
