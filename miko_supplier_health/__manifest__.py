@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Vendor Price Check & Supplier Audit (Miko)',
-    'version': '16.0.1.0.0',
-    'summary': 'Find products you cannot reorder and supplier prices that never apply',
+    'name': 'Audit Supplier Prices: Vendor Price Check (Miko)',
+    'version': '16.0.1.0.1',
+    'summary': 'Supplier audit and vendor pricelist check: find products you cannot reorder and supplier price lines (supplier pricelist) that never apply',
     'description': """
 Audits the buying side: products with no supplier at all, supplier price lines
 that have expired or can never be reached, and minimum order quantities that
